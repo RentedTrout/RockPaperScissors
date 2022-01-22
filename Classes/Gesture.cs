@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using static RockPaperScissors.Enums.Enums;
 
 namespace RockPaperScissors.Classes
@@ -106,11 +105,11 @@ namespace RockPaperScissors.Classes
             ScreenOutputs.RockPaperScissor();
 
             ScreenOutputs.CentreConsoleOutput($"{player1.Name} : {player1.CurrentGesture} ---- {player2.Name} : {player2.CurrentGesture}");
-            
+
             Console.ForegroundColor = ConsoleColor.Green;
 
             if (winner == Winner.Tie)
-                ScreenOutputs.CentreConsoleOutput("It is a tie!!");                        
+                ScreenOutputs.CentreConsoleOutput("It is a tie!!");
             else if (winner == Winner.Player1)
                 ScreenOutputs.CentreConsoleOutput($"Winner is {player1.Name}!!");
             else

@@ -51,7 +51,7 @@ namespace RockPaperScissors
             {
                 Console.Clear();
                 Console.WriteLine();
-                
+
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 Console.WriteLine($"Round {roundNumber}... {player1.Name} Score: {player1.Score}   {player2.Name} Score : {player2.Score}");

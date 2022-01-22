@@ -3,12 +3,16 @@ using System.Threading;
 
 namespace RockPaperScissors.Classes
 {
+    /// <summary>
+    /// Class to handle outputs to the console window
+    /// </summary>
     public static class ScreenOutputs
     {
+        /// <summary>
+        /// Initial splash screen
+        /// </summary>
         public static void SplashScreen()
-        {
-            ConsoleKeyInfo keyPressed;
-
+        {           
             Console.Clear();
             Console.WriteLine();
 
@@ -25,31 +29,40 @@ namespace RockPaperScissors.Classes
             Thread.Sleep(2000);
             Console.WriteLine();
 
-            PressEnterToContinue(true);            
+            PressEnterToContinue(true);
         }
-        public static void LeftSideRock(bool centre)
+
+        /// <summary>
+        /// Anscii art for ROCK
+        /// </summary>
+        /// <param name="centreText"></param>
+        public static void LeftSideRock(bool centreText)
         {
 
             string[] gesture = new string[]
             {
-                "      _______",
-                "-----'   ____)",
+                "      _______  ",
+                "-----'   ____) ",
                 "        ()____)",
                 "        ()____)",
-                "        ()___)",
-                "-----.__()__)"
+                "        ()___) ",
+                "-----.__()__)  "
             };
 
             foreach (string item in gesture)
             {
-                if (centre)
+                if (centreText)
                     Console.SetCursorPosition((Console.WindowWidth - item.Length) / 2, Console.CursorTop);
 
                 Console.WriteLine(item);
             }
         }
 
-        public static void LeftSideScissors(bool centre)
+        /// <summary>
+        /// Anscii art for SCISSORS
+        /// </summary>
+        /// <param name="centreText"></param>
+        public static void LeftSideScissors(bool centreText)
         {
 
             string[] gesture = new string[]
@@ -64,14 +77,19 @@ namespace RockPaperScissors.Classes
 
             foreach (string item in gesture)
             {
-                if (centre)
+                if (centreText)
                     Console.SetCursorPosition((Console.WindowWidth - item.Length) / 2, Console.CursorTop);
 
                 Console.WriteLine(item);
             }
         }
 
-        public static void LeftSidePaper(bool centre)
+        /// <summary>
+        /// Anscii art for PAPEE
+        /// </summary>
+        /// <param name="centreText"></param>
+        /// 
+        public static void LeftSidePaper(bool centreText)
         {
 
             string[] gesture = new string[]
@@ -86,13 +104,16 @@ namespace RockPaperScissors.Classes
 
             foreach (string item in gesture)
             {
-                if (centre)
+                if (centreText)
                     Console.SetCursorPosition((Console.WindowWidth - item.Length) / 2, Console.CursorTop);
 
                 Console.WriteLine(item);
             }
         }
 
+        /// <summary>
+        /// Animation for 1, 2, 3 etc
+        /// </summary>
         public static void RockPaperScissor()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -117,6 +138,10 @@ namespace RockPaperScissors.Classes
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        /// <summary>
+        /// Handles all Press Enter To Continue
+        /// </summary>
+        /// <param name="centreText"></param>
         public static void PressEnterToContinue(bool centreText)
         {
             ConsoleKeyInfo keyPressed;
@@ -134,11 +159,20 @@ namespace RockPaperScissors.Classes
             } while (keyPressed.Key != ConsoleKey.Enter);
         }
 
+        /// <summary>
+        /// Centre text in console window
+        /// </summary>
+        /// <param name="text"></param>
         public static void CentreConsoleOutput(string text)
         {
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, Console.CursorTop);
             Console.WriteLine(text);
         }
+
+        /// <summary>
+        /// Gets console entry for player 1
+        /// </summary>
+        /// <returns></returns>
         public static string GetPlayer1Name()
         {
             Console.Clear();
@@ -148,6 +182,10 @@ namespace RockPaperScissors.Classes
             return player1Name;
         }
 
+        /// <summary>
+        /// Gets console entry for player 1
+        /// </summary>
+        /// <returns></returns>
         public static string GetPlayer2Name()
         {
             Console.WriteLine("Player 2. Enter your name : ");
@@ -156,6 +194,12 @@ namespace RockPaperScissors.Classes
             return player1Name;
         }
 
+
+        /// <summary>
+        /// Determine player 2 - Human or Computer
+        /// </summary>
+        /// <param name="player1Name"></param>
+        /// <returns></returns>
         public static bool GetPlayer1Opponent(string player1Name)
         {
             ConsoleKeyInfo keyPressed;
