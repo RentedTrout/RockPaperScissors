@@ -11,8 +11,12 @@ namespace RockPaperScissors.Classes
     {
         public string Name { get; set; }
 
+        public PlayerType Type { get; set; }
+
         public int Score { get; set; } = 0;
 
         public HandSignal CurrentHandSignal { get; set; }
+
+        public HandSignal? PreviousHandSignal { get; set; }
     }
 }
