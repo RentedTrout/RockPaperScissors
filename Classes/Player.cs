@@ -13,6 +13,6 @@ namespace RockPaperScissors.Classes
 
         public int Score { get; set; } = 0;
 
-        public GestureChoice CurrentGesture { get; set; }
+        public HandSignal CurrentHandSignal { get; set; }
     }
 }

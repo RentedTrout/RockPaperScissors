@@ -1,6 +1,8 @@
 ﻿using RockPaperScissors.Classes;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static RockPaperScissors.Enums.Enums;
 
 namespace RockPaperScissors
 {
@@ -16,6 +18,7 @@ namespace RockPaperScissors
 
         public static Player player1 = new Player();
         public static Player player2 = new Player();
+        public static List<HandSignalConfig> HandSignalConfigs;
 
         public static void Main(string[] args)
         {
@@ -27,24 +30,124 @@ namespace RockPaperScissors
             Console.ForegroundColor = ConsoleColor.White;
             player1.Name = ScreenOutputs.GetPlayer1Name();
 
-            if (ScreenOutputs.GetPlayer1Opponent(player1.Name))
+            Game selectedGame = ScreenOutputs.GetGameToPlay();
+            ConfigureGameHandSignals(selectedGame);
+
+            if (ScreenOutputs.GetPlayer1Opponent())
             {
                 player2.Name = ScreenOutputs.GetPlayer2Name();
-                PlayGame(true);
-
+                PlayGame(true, selectedGame);
             }
             else
             {
                 player2.Name = "Computer";
-                PlayGame(false);
+                PlayGame(false, selectedGame);
             }
 
         }
 
-        public static void PlayGame(bool humanOpponent)
-        {
-            ConsoleKeyInfo keyPressed;
 
+        public static void ConfigureGameHandSignals(Game selectedGame)
+        {
+            switch (selectedGame)
+            {
+                case Game.Classic:
+                    // Configure what hand signal beats what...
+                    HandSignalConfigs = new()
+                    {
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Rock,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Scissors }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Paper,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Rock }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Scissors,
+                            Beats = new List<HandSignal>()
+                            { HandSignal.Paper }
+                        }
+                    };
+
+                    break;
+
+                case Game.Enhanced:
+                    HandSignalConfigs = new()
+                    {
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Rock,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Scissors }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Paper,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Rock }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Scissors,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Paper }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.FlameThrower,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Paper}
+                        }
+                    };
+                    break;
+
+                case Game.BigBang:
+                    HandSignalConfigs = new()
+                    {
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Rock,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Scissors, HandSignal.Lizard }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Paper,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Rock, HandSignal.Spock }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Scissors,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Paper, HandSignal.Lizard }
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Lizard,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Paper, HandSignal.Spock}
+                        },
+                        new HandSignalConfig
+                        {
+                            HandSignal = HandSignal.Spock,
+                            Beats = new List<HandSignal>()
+                                { HandSignal.Scissors, HandSignal.Rock}
+                        },
+                    };
+                    break;
+
+            }
+        }
+
+        public static void PlayGame(bool humanOpponent, Game selectedGame)
+        {
             int roundNumber = 1;
 
             while (player1.Score < 3 && player2.Score < 3)
@@ -59,19 +162,19 @@ namespace RockPaperScissors
 
                 Console.ForegroundColor = ConsoleColor.White;
 
-                player1.CurrentGesture = Gesture.GetPlayerGesture(player1);
+                player1.CurrentHandSignal = Gesture.GetPlayerHandSignal(player1, HandSignalConfigs, selectedGame);
 
                 if (humanOpponent)
                 {
                     Console.WriteLine();
-                    player2.CurrentGesture = Gesture.GetPlayerGesture(player2);
+                    player2.CurrentHandSignal = Gesture.GetPlayerHandSignal(player2, HandSignalConfigs, selectedGame);
                 }
                 else
                 {
-                    player2.CurrentGesture = Gesture.GetComputerGesture();
+                    player2.CurrentHandSignal = Gesture.GetComputerHandSignal(selectedGame);
                 }
 
-                Gesture.DetermineWinner(player1, player2);
+                Gesture.DetermineWinner(player1, player2, HandSignalConfigs);
 
                 roundNumber++;
             }
@@ -97,4 +200,3 @@ namespace RockPaperScissors
         }
     }
 }
-
